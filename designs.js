@@ -1,38 +1,31 @@
-let canvas = documment.getElementById("pixel_canvas");
-let height = document.getElementById("input_height");
-let width = document.getElementById("input_width");
-let sizePicker = document.getElementById("sizePicker");
-let color = document.getElementById("colorPicker");
+var height, width,color;
+$("#sizePicker").submit(function(event){
+	event.preventDefault();
+	height = $("#inputHeight").val();
+	width = $("#inputWeight")	.val();
+	makeGrid(height,width);
+	//console.log('Height:' +height+ 'and Width:' +width);	
 
-color.addEventListener("click", function () { });
-sizePicker.onsubmit = function (event) {
-    event.preventDefault();
-    clearGrid();
-    makeGrid();
-};
-// Select color input
-// Select size input
+})
 
-// When size is submitted by the user, call makeGrid()
 
-function makeGrid() {
+function makeGrid(x,y){
+	$('tr').remove();
+	//code goes here!
+	for(var i=1; i<=x; i++){
+		$('#pixelcanvas').append('<tr id=table' +i+'></tr>');
+		for(var j=1; j<=y; j++){
+			$('#table' +i).append('<td></td>');
+		}
+	}
+	//add color to cell
+	$('td').click(function addColor(){
+		color = $('#colorPicker').val();
 
-    // Your code goes here!
-    for (let r = 0; r < height.value; r++) {
-        const row = canvas.insertRow(r);
-        for (c = 0; c < width.value; c++) {
-            const cell = row.insertCell(c);
-            cell.addEventListener("click", fillSquare);
-
-        }
-    }
-
-}
-function clearGrid(){
-    while (canvas.firstChild){
-        canvas.removeChild(canvas.firstChild);
-    }
-}
-function fillSquare(){
-    this.setAttribute("style", 'background-color: ${color.value}');
+		if($(this).attr('style')){
+			$(this).removeAttr('style');
+		}else{
+			$(this).attr('style','background-color:'+color);
+		}
+	})
 }
